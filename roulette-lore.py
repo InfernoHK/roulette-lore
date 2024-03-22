@@ -6,7 +6,7 @@ def intro():
     name = input("By the way what is your name? ")
     print(name,"okay you are all signed in with your money which is $50 and we currently only have roulette right now")
     playq =input("Is that all right? ")
-    if playq == "yes" or playq == "Yes" or playq == "yeah" or playq == "Yeah" or playq == "yup" or playq == "okay" or playq == "Okay":
+    if playq == "yes" or playq == "Yes" or playq == "yeah" or playq == "Yeah" or playq == "yup" or playq == "okay" or playq == "Okay" or playq == "ok":
         print("The clerk walks you over to the roulette table and the dealer (whos name is tyrone not important) asks you")
     else:
         print("oh all right then")
@@ -53,10 +53,10 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
 
 
     if moneytotal > 0:
-        if choice == "yes" or choice == "Yes" or choice == "yeah" or choice == "Yeah" or choice == "yup" or choice == "okay" or choice == "Okay":
+        if choice == "yes" or choice == "Yes" or choice == "yeah" or choice == "Yeah" or choice == "yup" or choice == "okay" or choice == "Okay" or choice == "ok":
             betchoice = input("Do you want to bet color and number(1) or just color(2) ")
             moneynum = int(input("How much do you want to bet? "))
-            if moneynum not in range (0,moneytotal+1):
+            if moneynum not in range (0,math.ceil(moneytotal+1)):
                 choice = input("you dont have that money we both know that try again? (yes or no)")
                 generatednum, generatedcolor = generate()
                 system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,moneytotal,betchoice)
@@ -70,12 +70,12 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
                 if playernum == generatednum and playercolor == generatedcolor:
                     print("you win")
                     print("it was", generatednum,generatedcolor)
-                    moneytotal = moneytotal + 2*moneynum
+                    moneytotal = math.ceil(moneytotal + 2*moneynum)
                     print("your new total is", moneytotal)
                     print("$",moneytotal)
 
                 if playercolor == generatedcolor:
-                    moneytotal = moneytotal + moneynum/2
+                    moneytotal = math.floor(moneytotal + moneynum/2)
                     print("you only got the color right")
                     print("it was", generatednum,generatedcolor)
                     print("your new total is","$", moneytotal)
@@ -87,7 +87,7 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
             if betchoice == "2" or betchoice == "just color":
                 playercolor = (input("Choose a color Black or Red"))
                 if playercolor == generatedcolor:
-                    moneytotal = moneytotal + 1.5*moneynum
+                    moneytotal = math.ceil(moneytotal + 1.5*moneynum)
                     print("you got it right")
                     print("it was" ,generatedcolor)
                     print("your new total is","$", moneytotal)
@@ -97,32 +97,32 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
                     print("your new total is","$", moneytotal)
 
             if loanmoney > 0:
-                loanmoney = loanmoney + .15*loanmoney
+                loanmoney = math.ceil(loanmoney + .15*loanmoney)
                 print("your loan payment is now $",loanmoney)
                 loanpay = input("Make loan payment?")
-                if loanpay =="yes" or loanpay == "Yes" or loanpay == "yeah" or loanpay == "Yeah" or loanpay == "yup" or loanpay == "okay" or loanpay == "Okay":
+                if loanpay =="yes" or loanpay == "Yes" or loanpay == "yeah" or loanpay == "Yeah" or loanpay == "yup" or loanpay == "okay" or loanpay == "Okay" or loanpay == "ok":
                     loanpayask = int(input("How much"))
-                if loanpayask not in range(0,totalmoney+1):
+                if loanpayask not in range(0,math.ceil(moneytotal+1)):
                     print("You have been banned from columbian casino (odered from dealer so haha)")
                     exit()
                 loanpayask = loanpayask
-                totalmoney = totalmoney - loanpayask
-                print("your new total is $",totalmoney,"and you still owe $", loanmoney)
+                moneytotal = moneytotal - loanpayask
+                print("your new total is $",moneytotal,"and you still owe $", loanmoney)
 
 
             choice = input("Do you want to keep playing? ")
-            while choice == "yes" or choice == "Yes" or choice == "yeah" or choice == "Yeah" or choice == "yup" or choice == "okay" or choice == "Okay":
+            while choice == "yes" or choice == "Yes" or choice == "yeah" or choice == "Yeah" or choice == "yup" or choice == "okay" or choice == "Okay" or choice == "ok":
                 generatednum, generatedcolor = generate()
                 system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,moneytotal,betchoice)
             else:
                 print("Thank you for playing")
                 print("*you left the casino with*","$", moneytotal)
+                exit()
                 
         else:
             print("Loser")
             exit()
         
-    
 
     else:
         print("you have been kicked out from the casino for trying to play without money.")
