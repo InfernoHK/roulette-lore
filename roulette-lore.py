@@ -72,7 +72,7 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
         while choice not in ("yes", "no"):
             choice = input("Enter yes or no ")
         if choice == "yes":
-            betchoice = input("Do you want to bet color and number(1) or just color(2) ")
+            betchoice = input("Do you want to bet on color and number(1) or just color(2) ")
             while betchoice not in ("1","color and number","2","just color"):
                 betchoice = input("Please enter 1, 2, color and number, or just color ")
             while True:
@@ -98,7 +98,7 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
 
             if betchoice == "1" or betchoice == "color and number":
                 playernum = int(input("Choose a Number Between 1 and 36 "))
-                while playernum not in (1,36):
+                while playernum not in range(1,37):
                     playernum = int(input("Please enter a valid number "))
                 
                 playercolor = (input("Choose a color Black or Red "))
@@ -143,12 +143,21 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
                     loanpay = input("Enter Yes or no ")
                 if loanpay =="yes":
                     loanpayask = int(input("How much "))
-                if loanpayask not in range(0,math.ceil(moneytotal)):
+                if loanpayask not in range(1,math.ceil(moneytotal)):
                     print("You have been banned from columbian casino (told you)")
                     exit()
+                elif loanpay == "no":
+                    print("You have been banned from columbian casino (told you)")
+                    exit()
+                elif moneytotal == 0:
+                    print("You have no money to pay off your loan you have been kicked out")
+                    exit()
+
+
                 loanpayask = loanpayask
                 moneytotal = moneytotal - loanpayask
                 print("your new total is $",moneytotal,"and you still owe $", loanmoney)
+
 
 
             choice = input("Do you want to keep playing? ")
@@ -157,7 +166,7 @@ def system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,mon
             if choice == "yes":
                 generatednum, generatedcolor = generate()
                 system(playercolor,playernum,generatednum,generatedcolor,choice,moneynum,moneytotal,betchoice)
-            elif choice == "no":
+            elif choice == "no" and loanmoney:
                 print("Thank you for playing")
                 print("*you left the casino with*","$", moneytotal)
                 exit()
